@@ -1,10 +1,13 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { User } from 'src/users/entities/user.entity';
 import { AuthService } from './auth.service';
+import { Auth } from './decorators/auth.decorator';
 import { SignInDto } from './dto/sign-in.dto';
 import { SignUpDto } from './dto/sign-up.dto';
+import { AuthType } from './enums/auth-type.enum';
 import { TokenResponse } from './types/login-response';
 
+@Auth(AuthType.None)
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
