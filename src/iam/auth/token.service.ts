@@ -17,14 +17,15 @@ export class TokenService {
     const accessToken = await this.jwtService.signAsync(payload, {
       issuer: this.jwtConfiguration.issuer,
       audience: this.jwtConfiguration.audience,
-      secret: this.jwtConfiguration.accessTokenSecret,
       expiresIn: this.jwtConfiguration.accessTokenTTL,
+      secret: this.jwtConfiguration.accessTokenSecret,
     });
+
     const refreshToken = await this.jwtService.signAsync(payload, {
       issuer: this.jwtConfiguration.issuer,
       audience: this.jwtConfiguration.audience,
-      secret: this.jwtConfiguration.accessTokenSecret,
-      expiresIn: this.jwtConfiguration.refreshTokenSecret,
+      expiresIn: this.jwtConfiguration.refreshTokenTTL,
+      secret: this.jwtConfiguration.refreshTokenSecret,
     });
 
     return { accessToken, refreshToken };
