@@ -1,0 +1,1 @@
+export type TOKEN_TYPE = 'ACCESS_TOKEN' | 'REFRESH_TOKEN';

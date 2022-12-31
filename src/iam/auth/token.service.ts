@@ -1,9 +1,10 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import jwtConfig from '../config/jwt.config';
 import { JwtPayload } from './types/jwt-payload';
 import { TokenResponse } from './types/login-response';
+import { TOKEN_TYPE } from './types/tokens-type';
 
 @Injectable()
 export class TokenService {
@@ -29,5 +30,19 @@ export class TokenService {
     });
 
     return { accessToken, refreshToken };
+  }
+
+  async verifyToken(token: string, type: TOKEN_TYPE): Promise<JwtPayload> {
+    try {
+      const payload: JwtPayload = await this.jwtService.verifyAsync(token, {
+        secret:
+          type === 'ACCESS_TOKEN'
+            ? this.jwtConfiguration.accessTokenSecret
+            : this.jwtConfiguration.refreshTokenSecret,
+      });
+      return payload;
+    } catch (error) {
+      throw new UnauthorizedException();
+    }
   }
 }
