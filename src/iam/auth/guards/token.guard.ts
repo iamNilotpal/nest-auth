@@ -23,8 +23,6 @@ export class TokenGuard implements CanActivate {
       where: { email: payload.email },
     });
 
-    console.log({ user, payload });
-
     if (!user) return false;
     request[REQUEST_USER_KEY] = user;
     return true;
