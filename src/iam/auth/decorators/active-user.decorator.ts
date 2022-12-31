@@ -9,7 +9,7 @@ export const ActiveUser = createParamDecorator(
     context: ExecutionContext,
   ) => {
     const request = context.switchToHttp().getRequest<Request>();
-    const user = request[REQUEST_USER_KEY];
+    const user: User = request[REQUEST_USER_KEY];
     return field ? user?.[field] : user;
   },
 );
