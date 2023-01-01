@@ -1,3 +1,4 @@
 export enum PG_ERROR_CODES {
   CONFLICT = '23505',
+  NOT_AFFECTED = 0,
 }
